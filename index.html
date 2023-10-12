@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<meta name="renderer" content="webkit" />
+<meta name="force-rendering" content="webkit" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="msapplication-tap-highlight" content="no">
+<meta name="full-screen" content="yes" />
+<meta name="x5-fullscreen" content="true" />
+<meta name="360-fullscreen" content="true" />
+<meta name="screen-orientation" content="" />
+<meta name="x5-orientation" content="">
+
+
+    <link href="index.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard-dynamic-subset.css"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+
+    <title>Watermelon</title>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="BlueArchive Suika Game" />
+    <meta property="og:title" content="BlueArchive Suika Game" />
+    <meta property="og:description" content="블카수박게임" />
+    <meta property="og:image" content="assets/img/10.png" />
+    <meta property="og:image:type" content="image/png" />
+
+    <link rel="icon shortcut" href="assets/img/10.png" type="image/x-icon" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="item"></div>
+
+      <div class="item" id="game">
+        <div id="overlay">
+          <button id="playAgainButton" onclick="location.reload()">
+            Play Again
+          </button>
+        </div>
+	<canvas id="canvas"></canvas>
+        <div id="floor"></div>
+      </div>
+    </div>
+
+    <script defer src="index.js"></script>
+  </body>
+</html>
