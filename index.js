@@ -360,7 +360,7 @@
     });
     c.size = size;
     c.createdAt = Date.now();
-    c.restitution = 0.3;
+    c.restitution = 0.2;
     c.friction = 1;
 
     return c;
