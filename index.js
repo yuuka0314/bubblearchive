@@ -349,12 +349,12 @@
   }
 
   function newBall(x, y, size) {
-    c = Bodies.circle(x, y, size * 10 * 1.8, {  // 1.8배로 늘림
+    c = Bodies.circle(x, y, size * 10 * 1.5, {  // 1.8배로 늘림
       render: {
         sprite: {
           texture: `assets/img/${size}.png`,
-          xScale: size / 12.75 * 1.8,  // 1.8배로 늘림
-          yScale: size / 12.75 * 1.8,  // 1.8배로 늘림
+          xScale: size / 12.75 * 1.5,  // 1.8배로 늘림
+          yScale: size / 12.75 * 1.5,  // 1.8배로 늘림
         },
       },
     });
