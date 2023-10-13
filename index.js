@@ -130,7 +130,7 @@
     let deltaX = newMousePos - mousePos; // 마우스의 움직임 거리
 
     // 마우스의 움직임 거리가 10보다 클 때만 고정된 속도로 공을 움직임
-    if (Math.abs(deltaX) > 1000) {
+    if (Math.abs(deltaX) > 50) {
         deltaX = direction * FIXED_SPEED;
         mousePos += deltaX;
 
