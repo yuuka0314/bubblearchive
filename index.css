@@ -4,6 +4,7 @@ html, body {
   background: #141414;
   color: white;
   user-select: none;
+  pointer-events: none;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -22,10 +23,12 @@ html, body {
 
 #game {
   line-height: 0px;
+  pointer-events: auto;
 }
 
 #canvas {
   border-radius: 0px 0px 0 0;
+  pointer-events: auto;
 }
 
 #floor {
