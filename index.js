@@ -276,7 +276,7 @@
   }
 
   function resize() {
-    canvas.height = 745;
+    canvas.height = 780;
     canvas.width = 480;
 
     if (isMobile()) {
@@ -285,13 +285,13 @@
 
       floor.style.height = `${
         (window.innerHeight - canvas.height * parent.style.zoom) /
-        (2 * parent.style.zoom)
+        (parent.style.zoom*2)
       }px`;
     } else {
       parent.style.zoom = window.innerHeight / 720 / 1.3;
       parent.style.top = `${(canvas.height * parent.style.zoom) / 15}px`;
 
-      floor.style.height = "25px";
+      floor.style.height = "50px";
     }
 
     Render.setPixelRatio(render, parent.style.zoom * 2);
