@@ -21,7 +21,7 @@
     engine: engine,
     options: {
       width: 480,
-      height: 780,
+      height: 880,
       wireframes: false,
     },
   });
@@ -276,7 +276,7 @@
   }
 
   function resize() {
-    canvas.height = 780;
+    canvas.height = 880;
     canvas.width = 480;
 
     if (isMobile()) {
