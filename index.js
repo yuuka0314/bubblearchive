@@ -276,7 +276,7 @@
   }
 
   function resize() {
-    canvas.height = 720;
+    canvas.height = 745;
     canvas.width = 480;
 
     if (isMobile()) {
@@ -284,14 +284,14 @@
       parent.style.top = "0px";
 
       floor.style.height = `${
-        (window.innerHeight - canvas.height * parent.style.zoom - canvas.height * parent.style.zoom / 2) /
-        parent.style.zoom
+        (window.innerHeight - canvas.height * parent.style.zoom) /
+        (2 * parent.style.zoom)
       }px`;
     } else {
       parent.style.zoom = window.innerHeight / 720 / 1.3;
       parent.style.top = `${(canvas.height * parent.style.zoom) / 15}px`;
 
-      floor.style.height = "50px";
+      floor.style.height = "25px";
     }
 
     Render.setPixelRatio(render, parent.style.zoom * 2);
