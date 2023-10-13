@@ -119,16 +119,27 @@
     const rect = canvas.getBoundingClientRect();
     mousePos = e.clientX / parent.style.zoom - rect.left;
   });
+  const MAX_DRAG_DISTANCE = 30; // 한 프레임에서 공이 이동할 수 있는 최대 거리. 이 값을 조정해야 합니다.
   addEventListener("touchmove", (e) => {
     if (isGameOver) return;
 
     const rect = canvas.getBoundingClientRect();
-    mousePos = e.touches[0].clientX / parent.style.zoom - rect.left;
+    const newMousePos = e.touches[0].clientX / parent.style.zoom - rect.left;
 
-    const ballRadius = ball.size * 10 * 1.5; // 볼의 반지름을 가져옵니다.
-    if (mousePos > render.options.width - ballRadius) mousePos = render.options.width - ballRadius; // 오른쪽 경계를 고려하여 볼의 위치를 제한합니다.
-    else if (mousePos < ballRadius) mousePos = ballRadius; // 왼쪽 경계를 고려하여 볼의 위치를 제한합니다.
+    let deltaX = newMousePos - mousePos; // 마우스의 움직임 거리
+
+    if (Math.abs(deltaX) > MAX_DRAG_DISTANCE) {
+        deltaX = (deltaX > 0 ? 1 : -1) * MAX_DRAG_DISTANCE; // 임계값에 따라 움직임 거리 조정
+    }
+
+    mousePos += deltaX;
+
+    const ballRadius = ball.size * 10 * 1.5;
+
+    if (mousePos > render.options.width - ballRadius) mousePos = render.options.width - ballRadius;
+    else if (mousePos < ballRadius) mousePos = ballRadius;
   });
+
 
 
   addEventListener("click", () => {
@@ -349,14 +360,6 @@
       category: 2,
       mask: 0,
     };
-
-    // 공의 위치가 벽 근처인지 확인하고 조정
-    const ballRadius = ball.size * 10 * 1.5;
-    if (ball.position.x + ballRadius > render.options.width) {
-        ball.position.x = render.options.width - ballRadius;
-    } else if (ball.position.x - ballRadius < 0) {
-        ball.position.x = ballRadius;
-    }
 
     World.add(engine.world, ball);
   }
