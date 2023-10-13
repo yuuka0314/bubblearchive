@@ -124,7 +124,12 @@
 
     const rect = canvas.getBoundingClientRect();
     mousePos = e.touches[0].clientX / parent.style.zoom - rect.left;
+
+    const ballRadius = ball.circleRadius; // 볼의 반지름을 가져옵니다.
+    if (mousePos > 480 - ballRadius) mousePos = 480 - ballRadius; // 오른쪽 경계를 고려하여 볼의 위치를 제한합니다.
+    else if (mousePos < ballRadius) mousePos = ballRadius; // 왼쪽 경계를 고려하여 볼의 위치를 제한합니다.
   });
+
 
   addEventListener("click", () => {
     if (isGameOver || !isMouseOver) return;
