@@ -119,7 +119,7 @@
     const rect = canvas.getBoundingClientRect();
     mousePos = e.clientX / parent.style.zoom - rect.left;
   });
-  const MAX_DRAG_DISTANCE = 30; // 한 프레임에서 공이 이동할 수 있는 최대 거리. 이 값을 조정해야 합니다.
+  const MAX_SPEED = 10; // 공이 한 프레임에서 움직일 수 있는 최대 속도
   addEventListener("touchmove", (e) => {
     if (isGameOver) return;
 
@@ -128,8 +128,12 @@
 
     let deltaX = newMousePos - mousePos; // 마우스의 움직임 거리
 
-    if (Math.abs(deltaX) > MAX_DRAG_DISTANCE) {
-        deltaX = (deltaX > 0 ? 1 : -1) * MAX_DRAG_DISTANCE; // 임계값에 따라 움직임 거리 조정
+    // 공의 속도 계산
+    const speed = deltaX / (1 / fps);
+
+    // 속도 제한
+    if (Math.abs(speed) > MAX_SPEED) {
+        deltaX = (deltaX > 0 ? 1 : -1) * MAX_SPEED / fps;
     }
 
     mousePos += deltaX;
@@ -139,6 +143,7 @@
     if (mousePos > render.options.width - ballRadius) mousePos = render.options.width - ballRadius;
     else if (mousePos < ballRadius) mousePos = ballRadius;
   });
+
 
 
 
