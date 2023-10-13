@@ -285,7 +285,7 @@
 
       floor.style.height = `${
         (window.innerHeight - canvas.height * parent.style.zoom) /
-        (parent.style.zoom)
+        parent.style.zoom
       }px`;
     } else {
       parent.style.zoom = window.innerHeight / 720 / 1.3;
@@ -353,14 +353,14 @@
       render: {
         sprite: {
           texture: `assets/img/${size}.png`,
-          xScale: size / 12.75 * 1.5,  // 1.5배로 늘림
-          yScale: size / 12.75 * 1.5,  // 1.5배로 늘림
+          xScale: size / 12.75 * 1.5,  // 1.8배로 늘림
+          yScale: size / 12.75 * 1.5,  // 1.8배로 늘림
         },
       },
     });
     c.size = size;
     c.createdAt = Date.now();
-    c.restitution = 0.12;
+    c.restitution = 0.2;
     c.friction = 1;
 
     return c;
