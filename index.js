@@ -285,13 +285,13 @@
 
       floor.style.height = `${
         (window.innerHeight - canvas.height * parent.style.zoom) /
-        parent.style.zoom
+        parent.style.zoom / 2
       }px`;
     } else {
       parent.style.zoom = window.innerHeight / 720 / 1.3;
       parent.style.top = `${(canvas.height * parent.style.zoom) / 15}px`;
 
-      floor.style.height = "50px";
+      floor.style.height = "25px";
     }
 
     Render.setPixelRatio(render, parent.style.zoom * 2);
