@@ -119,7 +119,7 @@
     const rect = canvas.getBoundingClientRect();
     mousePos = e.clientX / parent.style.zoom - rect.left;
   });
-  const MAX_SPEED = 30; // 공이 한 프레임에서 움직일 수 있는 최대 속도
+  const MAX_SPEED = 60; // 공이 한 프레임에서 움직일 수 있는 최대 속도
   addEventListener("touchmove", (e) => {
     if (isGameOver) return;
 
@@ -128,15 +128,9 @@
 
     let deltaX = newMousePos - mousePos; // 마우스의 움직임 거리
 
-    // 공의 속도 계산
-    const speed = deltaX / (1 / fps);
+    deltaX = (deltaX > 0 ? 1 : -1) * MAX_SPEED / fps;
 
-    // 속도 제한
-    if (Math.abs(speed) > MAX_SPEED) {
-        deltaX = (deltaX > 0 ? 1 : -1) * MAX_SPEED / fps;
-    }
-
-    mousePos += deltaX*25;
+    mousePos += deltaX*20;
 
     const ballRadius = ball.size * 10 * 1.5;
 
