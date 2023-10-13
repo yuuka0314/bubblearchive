@@ -126,15 +126,21 @@
     const rect = canvas.getBoundingClientRect();
     const newMousePos = e.touches[0].clientX / parent.style.zoom - rect.left;
 
-    let deltaX = (newMousePos > mousePos) ? FIXED_SPEED : -FIXED_SPEED;
+    let direction = (newMousePos > mousePos) ? 1 : -1; // 드래그 방향
+    let deltaX = newMousePos - mousePos; // 마우스의 움직임 거리
 
-    mousePos += deltaX;
+    // 마우스의 움직임 거리가 2보다 클 때만 고정된 속도로 공을 움직임
+    if (Math.abs(deltaX) > 2) {
+        deltaX = direction * FIXED_SPEED;
+        mousePos += deltaX;
 
-    const ballRadius = ball.size * 10 * 1.5;
+        const ballRadius = ball.size * 10 * 1.5;
 
-    if (mousePos > render.options.width - ballRadius) mousePos = render.options.width - ballRadius;
-    else if (mousePos < ballRadius) mousePos = ballRadius;
+        if (mousePos > render.options.width - ballRadius) mousePos = render.options.width - ballRadius;
+        else if (mousePos < ballRadius) mousePos = ballRadius;
+    }
   });
+
 
 
   addEventListener("click", () => {
