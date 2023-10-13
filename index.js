@@ -48,7 +48,7 @@
     category: 1,
     mask: -2,
   };
-  const ground = Bodies.rectangle(400, 1220, 810, 1000, {
+  const ground = Bodies.rectangle(400, 1220, 810, 500, {
     isStatic: true,
     render: { fillStyle: "transpert" },
   });
