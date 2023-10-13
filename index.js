@@ -21,10 +21,26 @@
     engine: engine,
     options: {
       width: 480,
-      height: 720,
+      height: 880,
       wireframes: false,
     },
   });
+
+  const ballContours = {
+    '1': [[104, 18], [18, 109], [20, 166], [61, 225], [153, 254], [219, 222], [253, 160], [207, 53], [127, 26]],
+    '2': [[61, 19], [22, 80], [18, 205], [45, 195], [132, 246], [223, 227], [251, 160], [232, 81], [117, 14]],
+    '3': [[125, 5], [19, 131], [14, 182], [71, 234], [195, 234], [233, 207], [244, 126], [181, 61], [165, 17]],
+    '4': [[54, 93], [27, 226], [151, 253], [210, 233], [206, 194], [212, 239], [242, 222], [211, 76], [120, 53]],
+    '5': [[18, 22], [18, 22], [6, 61], [61, 49], [10, 221], [222, 244], [252, 137], [206, 10], [170, 41]],
+    '6': [[206, 18], [68, 69], [161, 0], [28, 11], [6, 82], [57, 77], [7, 143], [48, 252], [255, 112]],
+    '7': [[172, 40], [174, 67], [151, 47], [114, 68], [63, 85], [30, 204], [99, 250], [196, 248], [216, 76]],
+    '8': [[210, 84], [206, 109], [160, 51], [46, 116], [33, 228], [58, 240], [64, 239], [144, 252], [205, 240]],
+    '9': [[232, 54], [232, 54], [86, 73], [86, 73], [35, 222], [35, 222], [89, 253], [89, 253], [237, 240]],
+    '10': [[51, 64], [51, 64], [16, 124], [17, 219], [144, 253], [144, 253], [243, 214], [223, 66], [157, 44]],
+    '11': [[0, 0], [0, 0], [0, 0], [0, 255], [0, 255], [0, 255], [255, 255], [255, 255], [255, 0]]
+  };
+
+
 
   const times = [];
   let fps = 100;
@@ -39,16 +55,22 @@
 
   let isLineEnable = false;
 
-  const background = Bodies.rectangle(240, 360, 480, 720, {
-    isStatic: true,
-    render: { fillStyle: "#fe9" },
+  const backgroundImage = new Image();
+  backgroundImage.src = 'assets/canvas.png';
+  const background = Bodies.rectangle(240, 360, 480, 1200, {
+      isStatic: true,
+      render: {
+          sprite: {
+              texture: backgroundImage.src, // 이미지 URL 설정
+          },
+      },
   });
   background.collisionFilter = {
     group: 0,
     category: 1,
     mask: -2,
   };
-  const ground = Bodies.rectangle(400, 1220, 810, 1000, {
+  const ground = Bodies.rectangle(400, 1220, 810, 680, {
     isStatic: true,
     render: { fillStyle: "transpert" },
   });
@@ -107,7 +129,7 @@
       Body.setVelocity(ball, { x: 0, y: (100 / fps) * 5.5 });
       ball = null;
 
-      newSize = Math.ceil(Math.random() * 3);
+      newSize = Math.ceil(Math.random() * 5);
 
       setTimeout(() => createNewBall(newSize), 500);
     }
@@ -139,7 +161,7 @@
       Body.setVelocity(ball, { x: 0, y: (100 / fps) * 5.5 });
       ball = null;
 
-      newSize = Math.ceil(Math.random() * 3);
+      newSize = Math.ceil(Math.random() * 5);
 
       setTimeout(() => createNewBall(newSize), 500);
     }
@@ -175,20 +197,18 @@
 
     isLineEnable = false;
     const bodies = Composite.allBodies(engine.world);
-    let lineCrossed = false;  // 라인을 넘긴 객체가 있는지 확인하는 변수 추가
     for (let i = 4; i < bodies.length; i++) {
-        body = bodies[i];
+      body = bodies[i];
 
-        if (body.position.y < 120) {
-            if (
-                body !== ball &&
-                Math.abs(body.velocity.x) < 0.2 &&
-                Math.abs(body.velocity.y) < 0.2
-            ) {
-                lineCrossed = true;  // 라인을 넘긴 객체 확인
-                break;
-            }
-      } else if (body.position.y < 200) {
+      if (body.position.y < 115) {
+        if (
+          body !== ball &&
+          Math.abs(body.velocity.x) < 0.2 &&
+          Math.abs(body.velocity.y) < 0.2
+        ) {
+          gameOver();
+        }
+      } else if (body.position.y < 250) {
         if (
           body !== ball &&
           Math.abs(body.velocity.x) < 0.5 &&
@@ -198,65 +218,70 @@
         }
       }
     }
-    if (lineCrossed) {
-      if (!lineCrossedTime) {
-          lineCrossedTime = Date.now();  // 라인을 처음 넘긴 시점 기록
-      } else if (Date.now() - lineCrossedTime >= 3000) {  // 3초가 경과했는지 확인
-          gameOver();  // 3초 경과 시 게임 오버
-      }
-    } else {
-        lineCrossedTime = null;  // 라인을 넘기지 않았다면 시간 초기화
-    }
   });
 
   Events.on(engine, "collisionActive", collisionEvent);
   Events.on(engine, "collisionStart", collisionEvent);
 
+  let animations = [];
+
   function collisionEvent(e) {
     if (isGameOver) return;
 
     e.pairs.forEach((collision) => {
-      bodies = [collision.bodyA, collision.bodyB];
+        let bodies = [collision.bodyA, collision.bodyB];
 
-      if (bodies[0].size === undefined || bodies[1].size === undefined) return;
+        // 볼이 이미 합쳐진 상태인지 확인
+        if (bodies[0].merged || bodies[1].merged) return;
 
-      if (bodies[0].size === bodies[1].size) {
-        allBodies = Composite.allBodies(engine.world);
-        if (allBodies.includes(bodies[0]) && allBodies.includes(bodies[1])) {
-          if (
-            (Date.now() - bodies[0].createdAt < 100 ||
-              Date.now() - bodies[1].createdAt < 100) &&
-            bodies[0].createdAt != 0 &&
-            bodies[1].createdAt != 0
-          ) {
-            return;
-          }
+        if (bodies[0].size === undefined || bodies[1].size === undefined) return;
 
-          World.remove(engine.world, bodies[0]);
-          World.remove(engine.world, bodies[1]);
+        if (bodies[0].size === bodies[1].size) {
+            let allBodies = Composite.allBodies(engine.world);
+            if (allBodies.includes(bodies[0]) && allBodies.includes(bodies[1])) {
+                
+                // 볼을 합쳐진 상태로 표시
+                bodies[0].merged = true;
+                bodies[1].merged = true;
+                
+                const mergePos = {
+                    x: (bodies[0].position.x + bodies[1].position.x) / 2,
+                    y: (bodies[0].position.y + bodies[1].position.y) / 2
+                };
+                const maxHoleSize = Math.max(bodies[0].circleRadius, bodies[1].circleRadius);
+                let holeSize = 0;
 
-          World.add(
-            engine.world,
-            newBall(
-              (bodies[0].position.x + bodies[1].position.x) / 2,
-              (bodies[0].position.y + bodies[1].position.y) / 2,
-              bodies[0].size === 11 ? 11 : bodies[0].size + 1
-            )
-          );
+                animations.push({
+                    type: 'hole',
+                    position: mergePos,
+                    holeSize: holeSize,
+                    maxHoleSize: maxHoleSize,
+                    bodies: [bodies[0], bodies[1]],
+                    newSize: bodies[0].size-1 === 11 ? 1 : bodies[0].size + 1
+                });
 
-          score += bodies[0].size;
-
-          var audio = new Audio("assets/pop.wav");
-          audio.play();
+                let audioFile; 
+               
+                if (newSize >= 1 && newSize <= 4) {
+                  audioFile="assets/pop1.wav";
+                } else if (newSize >= 5 && newSize <= 8) {
+                  audioFile="assets/pop2.wav";
+                } else if (newSize >= 9 && newSize <= 11) {
+                  audioFile="assets/pop3.wav";
+                }
+    
+                const audio=new Audio(audioFile);
+                audio.play();
+            }
         }
-      }
     });
-  }
+}
+
 
   Events.on(render, "afterRender", () => {
     if (isGameOver) {
       ctx.fillStyle = "#ffffff55";
-      ctx.rect(0, 0, 480, 720);
+      ctx.rect(0, 0, 480, 880);
       ctx.fill();
 
       writeText("Game Over", "center", 240, 280, 50);
@@ -271,6 +296,30 @@
         ctx.lineTo(480, 100);
         ctx.stroke();
       }
+    }
+    for (let i = animations.length - 1; i >= 0; i--) {
+        const animation = animations[i];
+
+        if (animation.type === 'hole') {
+            ctx.beginPath();
+            ctx.arc(animation.position.x, animation.position.y, animation.holeSize, 0, Math.PI * 2, false);
+            ctx.fillStyle = "rgba(255,248,193, 0.9)";  // 투명한 원 색상 설정
+            ctx.fill();
+
+            animation.holeSize += animation.maxHoleSize / 10;
+
+            if (animation.holeSize >= animation.maxHoleSize) {
+                World.remove(engine.world, animation.bodies[0]);
+                World.remove(engine.world, animation.bodies[1]);
+                World.add(
+                    engine.world,
+                    newBall(animation.position.x, animation.position.y, animation.newSize)
+                );
+                score += animation.newSize;
+
+                animations.splice(i, 1);
+            }
+        }
     }
   });
 
@@ -287,7 +336,7 @@
   }
 
   function resize() {
-    canvas.height = 720;
+    canvas.height = 880;
     canvas.width = 480;
 
     if (isMobile()) {
@@ -302,7 +351,10 @@
       parent.style.zoom = window.innerHeight / 720 / 1.3;
       parent.style.top = `${(canvas.height * parent.style.zoom) / 15}px`;
 
-      floor.style.height = "50px";
+      floor.style.height = `${
+        (window.innerHeight - canvas.height * parent.style.zoom) /
+        parent.style.zoom
+      }px`;
     }
 
     Render.setPixelRatio(render, parent.style.zoom * 2);
@@ -336,7 +388,8 @@
       engine.world.bodies.pop();
     }
 
-    createNewBall(1);
+    newSize = Math.ceil(Math.random() * 5);
+    createNewBall(newSize);
   }
 
   function gameOver() {
@@ -360,20 +413,29 @@
   }
 
   function newBall(x, y, size) {
-    c = Bodies.circle(x, y, size * 10 * 1.5, {  // 1.8배로 늘림
-      render: {
-        sprite: {
-          texture: `assets/img/${size}.png`,
-          xScale: size / 12.75 * 1.5,  // 1.8배로 늘림
-          yScale: size / 12.75 * 1.5,  // 1.8배로 늘림
-        },
-      },
-    });
-    c.size = size;
-    c.createdAt = Date.now();
-    c.restitution = 0.2;
-    c.friction = 0.6;
+    if (size === 1) size = 2;  // Adjust the first size to the second size
+    
+    let polyBody;
 
-    return c;
+    const radius = size*11; // Adjust this value for the desired size of the nonagon
+      polyBody = Bodies.polygon(x, y, 9, radius, {
+          render: {
+              sprite: {
+                  texture: `assets/img/${size-1}.png`,
+                  xScale: size / 12.75 * 1.2,  // Scale by 1.8
+                  yScale: size / 12.75 * 1.2,  // Scale by 1.8
+              },
+          }
+    });
+
+    // Add attributes to the body
+    polyBody.size = size;
+    polyBody.createdAt = Date.now();
+    polyBody.restitution = 0.2;
+    polyBody.friction = 0.6;
+    polyBody.merged = false;
+
+    return polyBody;
   }
 })();
+
