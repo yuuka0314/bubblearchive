@@ -125,8 +125,8 @@
     const rect = canvas.getBoundingClientRect();
     mousePos = e.touches[0].clientX / parent.style.zoom - rect.left;
 
-    const ballRadius = ball.circleRadius; // 볼의 반지름을 가져옵니다.
-    if (mousePos > 480 - ballRadius) mousePos = 480 - ballRadius; // 오른쪽 경계를 고려하여 볼의 위치를 제한합니다.
+    const ballRadius = ball.size * 10 * 1.5; // 볼의 반지름을 가져옵니다.
+    if (mousePos > render.options.width - ballRadius) mousePos = render.options.width - ballRadius; // 오른쪽 경계를 고려하여 볼의 위치를 제한합니다.
     else if (mousePos < ballRadius) mousePos = ballRadius; // 왼쪽 경계를 고려하여 볼의 위치를 제한합니다.
   });
 
@@ -160,12 +160,6 @@
 
   Events.on(engine, "beforeUpdate", () => {
     if (isGameOver) return;
-
-    if (ball != null) {
-        const ballRadius = ball.size * 10 * 1.5;
-        if (ball.position.x > 480 - ballRadius) ball.position.x = 480 - ballRadius; 
-        else if (ball.position.x < ballRadius) ball.position.x = ballRadius;
-    }
     
     if (ball != null) {
       const gravity = engine.world.gravity;
