@@ -276,7 +276,8 @@
   }
 
   function resize() {
-    canvas.height = 720 + (floor.style.height / 2); // Increase canvas height by half of the floor's height reduction
+    canvas.height = 720 + (((window.innerHeight - canvas.height * parent.style.zoom) /
+        parent.style.zoom) / 2); // Increase canvas height by half of the floor's height reduction
     canvas.width = 480;
 
     if (isMobile()) {
