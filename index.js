@@ -276,8 +276,7 @@
   }
 
   function resize() {
-    canvas.height = 720 + (((window.innerHeight - canvas.height * parent.style.zoom) /
-        parent.style.zoom) / 2); // Increase canvas height by half of the floor's height reduction
+    canvas.height = 720;
     canvas.width = 480;
 
     if (isMobile()) {
@@ -287,17 +286,16 @@
       floor.style.height = `${
         (window.innerHeight - canvas.height * parent.style.zoom) /
         parent.style.zoom
-      }px` / 2; // Reduce the height by half
+      }px`;
     } else {
-      parent.style.zoom = window.innerHeight / (720 + (floor.style.height / 2)) / 1.3; // Adjust for the new canvas height
+      parent.style.zoom = window.innerHeight / 720 / 1.3;
       parent.style.top = `${(canvas.height * parent.style.zoom) / 15}px`;
 
-      floor.style.height = "25px"; // Reduce the height by half
+      floor.style.height = "50px";
     }
 
     Render.setPixelRatio(render, parent.style.zoom * 2);
   }
-
 
   function refreshLoop() {
     window.requestAnimationFrame(() => {
@@ -355,14 +353,14 @@
       render: {
         sprite: {
           texture: `assets/img/${size}.png`,
-          xScale: size / 12.75 * 1.5,  // 1.5배로 늘림
-          yScale: size / 12.75 * 1.5,  // 1.5배로 늘림
+          xScale: size / 12.75 * 1.5,  // 1.8배로 늘림
+          yScale: size / 12.75 * 1.5,  // 1.8배로 늘림
         },
       },
     });
     c.size = size;
     c.createdAt = Date.now();
-    c.restitution = 0.12;
+    c.restitution = 0.2;
     c.friction = 1;
 
     return c;
