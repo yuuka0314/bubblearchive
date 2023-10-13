@@ -119,7 +119,7 @@
     const rect = canvas.getBoundingClientRect();
     mousePos = e.clientX / parent.style.zoom - rect.left;
   });
-  const MAX_SPEED = 50; // 공이 한 프레임에서 움직일 수 있는 최대 속도
+  const MAX_SPEED = 2000; // 공이 한 프레임에서 움직일 수 있는 최대 속도
   addEventListener("touchmove", (e) => {
     if (isGameOver) return;
 
