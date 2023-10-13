@@ -160,6 +160,17 @@
 
   Events.on(engine, "beforeUpdate", () => {
     if (isGameOver) return;
+
+    if (ball) {
+        const maxX = render.options.width - ball.circleRadius;
+        const minX = ball.circleRadius;
+
+        if (ball.position.x > maxX) {
+            Body.setPosition(ball, { x: maxX, y: ball.position.y });
+        } else if (ball.position.x < minX) {
+            Body.setPosition(ball, { x: minX, y: ball.position.y });
+        }
+    }
     
     if (ball != null) {
       const gravity = engine.world.gravity;
