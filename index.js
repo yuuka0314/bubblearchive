@@ -175,17 +175,19 @@
 
     isLineEnable = false;
     const bodies = Composite.allBodies(engine.world);
+    let lineCrossed = false;  // 라인을 넘긴 객체가 있는지 확인하는 변수 추가
     for (let i = 4; i < bodies.length; i++) {
-      body = bodies[i];
+        body = bodies[i];
 
-      if (body.position.y < 120) {
-        if (
-          body !== ball &&
-          Math.abs(body.velocity.x) < 0.2 &&
-          Math.abs(body.velocity.y) < 0.2
-        ) {
-          gameOver();
-        }
+        if (body.position.y < 120) {
+            if (
+                body !== ball &&
+                Math.abs(body.velocity.x) < 0.2 &&
+                Math.abs(body.velocity.y) < 0.2
+            ) {
+                lineCrossed = true;  // 라인을 넘긴 객체 확인
+                break;
+            }
       } else if (body.position.y < 200) {
         if (
           body !== ball &&
@@ -195,6 +197,15 @@
           isLineEnable = true;
         }
       }
+    }
+    if (lineCrossed) {
+      if (!lineCrossedTime) {
+          lineCrossedTime = Date.now();  // 라인을 처음 넘긴 시점 기록
+      } else if (Date.now() - lineCrossedTime >= 3000) {  // 3초가 경과했는지 확인
+          gameOver();  // 3초 경과 시 게임 오버
+      }
+    } else {
+        lineCrossedTime = null;  // 라인을 넘기지 않았다면 시간 초기화
     }
   });
 
@@ -349,19 +360,19 @@
   }
 
   function newBall(x, y, size) {
-    c = Bodies.circle(x, y, size * 10 * 1.8, {  // 1.8배로 늘림
+    c = Bodies.circle(x, y, size * 10 * 1.5, {  // 1.8배로 늘림
       render: {
         sprite: {
           texture: `assets/img/${size}.png`,
-          xScale: size / 12.75 * 1.8,  // 1.8배로 늘림
-          yScale: size / 12.75 * 1.8,  // 1.8배로 늘림
+          xScale: size / 12.75 * 1.5,  // 1.8배로 늘림
+          yScale: size / 12.75 * 1.5,  // 1.8배로 늘림
         },
       },
     });
     c.size = size;
     c.createdAt = Date.now();
-    c.restitution = 0.3;
-    c.friction = 1;
+    c.restitution = 0.2;
+    c.friction = 0.6;
 
     return c;
   }
