@@ -48,7 +48,7 @@
     category: 1,
     mask: -2,
   };
-  const ground = Bodies.rectangle(400, 610, 810, 500, {  // changed y-coordinate from 1220 to 610, and height from 1000 to 500
+  const ground = Bodies.rectangle(400, 1830, 810, 1500, {  // changed y-coordinate from 1220 to 610, and height from 1000 to 500
     isStatic: true,
     render: { fillStyle: "transparent" },  // corrected the typo "transpert" to "transparent"
   });
@@ -285,7 +285,7 @@
 
       floor.style.height = `${
         (window.innerHeight - canvas.height * parent.style.zoom) /
-        parent.style.zoom
+        parent.style.zoom / 2
       }px`;
     } else {
       parent.style.zoom = window.innerHeight / 720 / 1.3;
