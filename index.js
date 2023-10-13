@@ -284,8 +284,8 @@
       parent.style.top = "0px";
 
       floor.style.height = `${
-        (window.innerHeight - canvas.height * parent.style.zoom) /
-        (2*parent.style.zoom)
+        (window.innerHeight - canvas.height * parent.style.zoom - canvas.height * parent.style.zoom / 2) /
+        parent.style.zoom
       }px`;
     } else {
       parent.style.zoom = window.innerHeight / 720 / 1.3;
