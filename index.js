@@ -372,7 +372,7 @@
     c.size = size;
     c.createdAt = Date.now();
     c.restitution = 0.2;
-    c.friction = 0.6; 
+    c.friction = 0.6;
 
     return c;
   }
