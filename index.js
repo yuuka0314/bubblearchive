@@ -276,7 +276,7 @@
   }
 
   function resize() {
-    canvas.height = 720;
+    canvas.height = 720 + (floor.style.height / 2); // Increase canvas height by half of the floor's height reduction
     canvas.width = 480;
 
     if (isMobile()) {
@@ -286,16 +286,17 @@
       floor.style.height = `${
         (window.innerHeight - canvas.height * parent.style.zoom) /
         parent.style.zoom
-      }px`;
+      }px` / 2; // Reduce the height by half
     } else {
-      parent.style.zoom = window.innerHeight / 720 / 1.3;
+      parent.style.zoom = window.innerHeight / (720 + (floor.style.height / 2)) / 1.3; // Adjust for the new canvas height
       parent.style.top = `${(canvas.height * parent.style.zoom) / 15}px`;
 
-      floor.style.height = "50px";
+      floor.style.height = "25px"; // Reduce the height by half
     }
 
     Render.setPixelRatio(render, parent.style.zoom * 2);
   }
+
 
   function refreshLoop() {
     window.requestAnimationFrame(() => {
