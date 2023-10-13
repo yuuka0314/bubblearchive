@@ -119,29 +119,12 @@
     const rect = canvas.getBoundingClientRect();
     mousePos = e.clientX / parent.style.zoom - rect.left;
   });
-  const FIXED_SPEED = 10; // 원하는 고정 속도 값
   addEventListener("touchmove", (e) => {
     if (isGameOver) return;
 
     const rect = canvas.getBoundingClientRect();
-    const newMousePos = e.touches[0].clientX / parent.style.zoom - rect.left;
-
-    let direction = (newMousePos > mousePos) ? 1 : -1; // 드래그 방향
-    let deltaX = newMousePos - mousePos; // 마우스의 움직임 거리
-
-    // 마우스의 움직임 거리가 11보다 클 때만 고정된 속도로 공을 움직임
-    if (Math.abs(deltaX) > 11) {
-        deltaX = direction * FIXED_SPEED;
-        mousePos += deltaX;
-
-        const ballRadius = ball.size * 10 * 1.5;
-
-        if (mousePos > render.options.width - ballRadius) mousePos = render.options.width - ballRadius;
-        else if (mousePos < ballRadius) mousePos = ballRadius;
-    }
+    mousePos = e.touches[0].clientX / parent.style.zoom - rect.left;
   });
-
-
 
   addEventListener("click", () => {
     if (isGameOver || !isMouseOver) return;
