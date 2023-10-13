@@ -119,7 +119,7 @@
     const rect = canvas.getBoundingClientRect();
     mousePos = e.clientX / parent.style.zoom - rect.left;
   });
-  const MAX_DRAG_DISTANCE = 50; // 한 프레임에서 공이 이동할 수 있는 최대 거리. 이 값을 조정해야 합니다.
+  const MAX_DRAG_DISTANCE = 30; // 한 프레임에서 공이 이동할 수 있는 최대 거리. 이 값을 조정해야 합니다.
   addEventListener("touchmove", (e) => {
     if (isGameOver) return;
 
