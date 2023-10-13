@@ -162,6 +162,12 @@
     if (isGameOver) return;
 
     if (ball != null) {
+        const ballRadius = ball.size * 10 * 1.5;
+        if (ball.position.x > 480 - ballRadius) ball.position.x = 480 - ballRadius; 
+        else if (ball.position.x < ballRadius) ball.position.x = ballRadius;
+    }
+    
+    if (ball != null) {
       const gravity = engine.world.gravity;
       Body.applyForce(ball, ball.position, {
         x: -gravity.x * gravity.scale * ball.mass,
@@ -365,7 +371,7 @@
     });
     c.size = size;
     c.createdAt = Date.now();
-    c.restitution = 0.2;
+    c.restitution = 0.15;
     c.friction = 1;
 
     return c;
