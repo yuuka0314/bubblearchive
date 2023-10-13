@@ -119,24 +119,23 @@
     const rect = canvas.getBoundingClientRect();
     mousePos = e.clientX / parent.style.zoom - rect.left;
   });
-  const MAX_SPEED = 60; // 공이 한 프레임에서 움직일 수 있는 최대 속도
+  const FIXED_SPEED = 10; // 원하는 고정 속도 값
   addEventListener("touchmove", (e) => {
     if (isGameOver) return;
 
     const rect = canvas.getBoundingClientRect();
     const newMousePos = e.touches[0].clientX / parent.style.zoom - rect.left;
 
-    let deltaX = newMousePos - mousePos; // 마우스의 움직임 거리
+    let deltaX = (newMousePos > mousePos) ? FIXED_SPEED : -FIXED_SPEED;
 
-    deltaX = (deltaX > 0 ? 1 : -1) * MAX_SPEED / fps;
-
-    mousePos += deltaX*20;
+    mousePos += deltaX;
 
     const ballRadius = ball.size * 10 * 1.5;
 
     if (mousePos > render.options.width - ballRadius) mousePos = render.options.width - ballRadius;
     else if (mousePos < ballRadius) mousePos = ballRadius;
   });
+
 
   addEventListener("click", () => {
     if (isGameOver || !isMouseOver) return;
