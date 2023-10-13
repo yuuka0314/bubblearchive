@@ -39,7 +39,7 @@
 
   let isLineEnable = false;
 
-  const background = Bodies.rectangle(240, 360, 480, 720, {
+  const background = Bodies.rectangle(240, 360, 480, 880, {
     isStatic: true,
     render: { fillStyle: "#fe9" },
   });
