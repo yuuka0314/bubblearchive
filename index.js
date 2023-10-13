@@ -372,11 +372,7 @@
     c.size = size;
     c.createdAt = Date.now();
     c.restitution = 0.2;
-<<<<<<< HEAD
     c.friction = 0.6;
-=======
-    c.friction = 1;
->>>>>>> 5b69b8c9f1dbe75f569f352cb57c475ab5446960
 
     return c;
   }
