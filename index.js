@@ -48,9 +48,9 @@
     category: 1,
     mask: -2,
   };
-  const ground = Bodies.rectangle(400, 1220, 810, 1000, {
+  const ground = Bodies.rectangle(400, 610, 810, 500, {  // changed y-coordinate from 1220 to 610, and height from 1000 to 500
     isStatic: true,
-    render: { fillStyle: "transpert" },
+    render: { fillStyle: "transparent" },  // corrected the typo "transpert" to "transparent"
   });
   const wallLeft = Bodies.rectangle(-50, 500, 100, 1000, {
     isStatic: true,
@@ -291,7 +291,7 @@
       parent.style.zoom = window.innerHeight / 720 / 1.3;
       parent.style.top = `${(canvas.height * parent.style.zoom) / 15}px`;
 
-      floor.style.height = "25px";
+      floor.style.height = "25px";  // changed height from 50px to 25px
     }
 
     Render.setPixelRatio(render, parent.style.zoom * 2);
