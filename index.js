@@ -93,10 +93,6 @@
   addEventListener("touchend", () => {
     if (isGameOver) return;
 
-    const ballRadius = ball.size * 10 * 1.5;
-    if (ball.position.x > render.options.width - ballRadius) ball.position.x = render.options.width - ballRadius;
-    else if (ball.position.x < ballRadius) ball.position.x = ballRadius;
-
     isClicking = false;
 
     if (isGameOver) return;
