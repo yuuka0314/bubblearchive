@@ -136,7 +136,7 @@
         deltaX = (deltaX > 0 ? 1 : -1) * MAX_SPEED / fps;
     }
 
-    mousePos += deltaX*10;
+    mousePos += deltaX*25;
 
     const ballRadius = ball.size * 10 * 1.5;
 
