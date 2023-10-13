@@ -350,6 +350,14 @@
       mask: 0,
     };
 
+    // 공의 위치가 벽 근처인지 확인하고 조정
+    const ballRadius = ball.size * 10 * 1.5;
+    if (ball.position.x + ballRadius > render.options.width) {
+        ball.position.x = render.options.width - ballRadius;
+    } else if (ball.position.x - ballRadius < 0) {
+        ball.position.x = ballRadius;
+    }
+
     World.add(engine.world, ball);
   }
 
