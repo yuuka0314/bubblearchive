@@ -21,7 +21,7 @@
     engine: engine,
     options: {
       width: 480,
-      height: 880,
+      height: 720,
       wireframes: false,
     },
   });
@@ -39,7 +39,7 @@
 
   let isLineEnable = false;
 
-  const background = Bodies.rectangle(240, 360, 480, 880, {
+  const background = Bodies.rectangle(240, 360, 480, 720, {
     isStatic: true,
     render: { fillStyle: "#fe9" },
   });
@@ -276,7 +276,7 @@
   }
 
   function resize() {
-    canvas.height = 880;
+    canvas.height = 720;
     canvas.width = 480;
 
     if (isMobile()) {
@@ -353,8 +353,8 @@
       render: {
         sprite: {
           texture: `assets/img/${size}.png`,
-          xScale: size / 12.75 * 1.5,  // 1.8배로 늘림
-          yScale: size / 12.75 * 1.5,  // 1.8배로 늘림
+          xScale: size / 12.75 * 1.5,  // 1.5배로 늘림
+          yScale: size / 12.75 * 1.5,  // 1.5배로 늘림
         },
       },
     });
