@@ -44,6 +44,27 @@ document.addEventListener('touchstart', function(event){
 }, { passive: false });
 </script>
 
+<!-- Firebase App (필수) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+
+<!-- Firestore 라이브러리 -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyC7lHWhvSIFzjKqEqG2mS3deLTMRa8shp4",
+    authDomain: "bubblearchive-3a52e.firebaseapp.com",
+    projectId: "bubblearchive-3a52e",
+    storageBucket: "bubblearchive-3a52e.appspot.com",
+    messagingSenderId: "265125635039",
+    appId: "1:265125635039:web:9238d0cb7ad258f0199a6a"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
+
   </head>
 
   <body>

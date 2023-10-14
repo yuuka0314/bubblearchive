@@ -39,8 +39,29 @@
     '10': [[51, 64], [51, 64], [16, 124], [17, 219], [144, 253], [144, 253], [243, 214], [223, 66], [157, 44]],
     '11': [[0, 0], [0, 0], [0, 0], [0, 255], [0, 255], [0, 255], [255, 255], [255, 255], [255, 0]]
   };
-
-
+  
+  async function registerScore(score) {
+    // 점수를 Firestore에 등록
+    const leaderboardRef = db.collection("leaderboard");
+    await leaderboardRef.add({ score: score });
+  
+    // 상위 몇%인지 계산
+    const q = leaderboardRef.orderBy("score", "desc");
+    const scoresSnapshot = await q.get();
+    let totalUsers = scoresSnapshot.size;
+    let higherScores = 0;
+  
+    scoresSnapshot.forEach((doc) => {
+      if (doc.data().score > score) {
+        higherScores++;
+      }
+    });
+  
+    let percentile = ((totalUsers - higherScores) / totalUsers) * 100;
+  
+    // 결과 표시
+    percentileText = `전 세계 ${percentile.toFixed(2)}%의 유저를 이겼습니다.`;
+  }  
 
   const times = [];
   let fps = 100;
@@ -54,6 +75,8 @@
   let score = 0;
 
   let isLineEnable = false;
+
+  let percentileText = "";  // 게임이 오버될 때 여기에 백분위 정보를 저장합니다.
 
   const backgroundImage = new Image();
   backgroundImage.src = 'assets/canvas.png';
@@ -286,6 +309,7 @@
 
       writeText("Game Over", "center", 240, 280, 50);
       writeText("Score: " + score, "center", 240, 320, 30);
+      writeText(percentileText, "center", 240, 380, 20);  // 백분위 정보를 그립니다.
     } else {
       writeText(score, "start", 25, 60, 40);
 
@@ -399,6 +423,8 @@
     gameOverlayer.style.display = "";
 
     if (ball != null) World.remove(engine.world, ball);
+
+    registerScore(score);
   }
 
   function createNewBall(size) {
@@ -423,8 +449,8 @@
             render: {
                 sprite: {
                     texture: `assets/img/${size-1}.png`,
-                    xScale: size / 12.75 * 1.2,  // Scale by 1.2
-                    yScale: size / 12.75 * 1.2,  // Scale by 1.2
+                    xScale: size / 12.75 * 1.2,  // Scale by 1.1
+                    yScale: size / 12.75 * 1.2,  // Scale by 1.1
                 },
             }
       });
@@ -438,12 +464,12 @@
   
       return polyBody;
     }else{
-      c = Bodies.circle(x, y, size * 10 * 1.2, {  // 1.2배로 늘림
+      c = Bodies.circle(x, y, size * 10 * 1.1, {  // 1.1배로 늘림
         render: {
           sprite: {
             texture: `assets/img/${size-1}.png`,
-            xScale: size / 12.75 * 1.2,  // 1.2배로 늘림
-            yScale: size / 12.75 * 1.2,  // 1.2배로 늘림
+            xScale: size / 12.75 * 1.1,  // 1.1배로 늘림
+            yScale: size / 12.75 * 1.1,  // 1.1배로 늘림
           },
         },
       });
