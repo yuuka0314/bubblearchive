@@ -20,7 +20,7 @@
     canvas: canvas,
     engine: engine,
     options: {
-      width: 480,
+      width: 500,
       height: 880,
       wireframes: false,
     },
@@ -57,7 +57,7 @@
 
   const backgroundImage = new Image();
   backgroundImage.src = 'assets/canvas.png';
-  const background = Bodies.rectangle(240, 360, 480, 1200, {
+  const background = Bodies.rectangle(240, 360, 500, 1200, {
       isStatic: true,
       render: {
           sprite: {
@@ -248,7 +248,7 @@
                     x: (bodies[0].position.x + bodies[1].position.x) / 2,
                     y: (bodies[0].position.y + bodies[1].position.y) / 2
                 };
-                const maxHoleSize = Math.max(bodies[0].circleRadius, bodies[1].circleRadius);
+                const maxHoleSize = Math.max(bodies[0].size * 10 * 1.5, bodies[1].size * 10 * 1.5);
                 let holeSize = 0;
 
                 animations.push({
@@ -281,7 +281,7 @@
   Events.on(render, "afterRender", () => {
     if (isGameOver) {
       ctx.fillStyle = "#ffffff55";
-      ctx.rect(0, 0, 480, 880);
+      ctx.rect(0, 0, 500, 880);
       ctx.fill();
 
       writeText("Game Over", "center", 240, 280, 50);
@@ -293,7 +293,7 @@
         ctx.strokeStyle = "#f55";
         ctx.beginPath();
         ctx.moveTo(0, 100);
-        ctx.lineTo(480, 100);
+        ctx.lineTo(500, 100);
         ctx.stroke();
       }
     }
@@ -303,7 +303,7 @@
         if (animation.type === 'hole') {
             ctx.beginPath();
             ctx.arc(animation.position.x, animation.position.y, animation.holeSize, 0, Math.PI * 2, false);
-            ctx.fillStyle = "rgba(255,248,193, 0.9)";  // 투명한 원 색상 설정
+            ctx.fillStyle = "rgba(255,255,255, 0.7)";  // 투명한 원 색상 설정
             ctx.fill();
 
             animation.holeSize += animation.maxHoleSize / 10;
@@ -328,7 +328,7 @@
     ctx.textAlign = textAlign;
     ctx.lineWidth = size / 8;
 
-    ctx.strokeStyle = "#000";
+    ctx.strokeStyle = "#77d2ff";
     ctx.strokeText(text, x, y);
 
     ctx.fillStyle = "#fff";
@@ -337,10 +337,10 @@
 
   function resize() {
     canvas.height = 880;
-    canvas.width = 480;
+    canvas.width = 500;
 
     if (isMobile()) {
-      parent.style.zoom = window.innerWidth / 480;
+      parent.style.zoom = window.innerWidth / 500;
       parent.style.top = "0px";
 
       floor.style.height = `${
@@ -413,25 +413,9 @@
   }
 
   function newBall(x, y, size) {
-<<<<<<< HEAD
     if (size === 1) size = 2;  // Adjust the first size to the second size
     
     let polyBody;
-=======
-    c = Bodies.circle(x, y, size * 10 * 1.5, {  // 1.8배로 늘림
-      render: {
-        sprite: {
-          texture: `assets/img/${size}.png`,
-          xScale: size / 12.75 * 1.5,  // 1.8배로 늘림
-          yScale: size / 12.75 * 1.5,  // 1.8배로 늘림
-        },
-      },
-    });
-    c.size = size;
-    c.createdAt = Date.now();
-    c.restitution = 0.2;
-    c.friction = 0.6;
->>>>>>> 413519774c45186b14dc16d153195e54ee1b1088
 
     const radius = size*11; // Adjust this value for the desired size of the nonagon
       polyBody = Bodies.polygon(x, y, 9, radius, {
@@ -454,4 +438,3 @@
     return polyBody;
   }
 })();
-

@@ -17,6 +17,10 @@ html, body {
   grid-template-rows: 7fr 1fr;
 }
 
+.youtube-button {
+  pointer-events: auto;
+}
+
 .item:nth-child(2) {
   align-self: end;
 }
@@ -33,7 +37,7 @@ html, body {
 
 #floor {
   width: 480px;
-  background: #B7CAFB;
+  background: #A0C8EB;
   border-radius: 0 0 0px 0px;
 }
 
