@@ -20,7 +20,7 @@
     canvas: canvas,
     engine: engine,
     options: {
-      width: 500,
+      width: 490,
       height: 880,
       wireframes: false,
     },
@@ -74,11 +74,11 @@
     isStatic: true,
     render: { fillStyle: "transpert" },
   });
-  const wallLeft = Bodies.rectangle(-50, 500, 100, 1000, {
+  const wallLeft = Bodies.rectangle(-50, 490, 100, 1000, {
     isStatic: true,
     render: { fillStyle: "transpert" },
   });
-  const wallRight = Bodies.rectangle(530, 500, 100, 1000, {
+  const wallRight = Bodies.rectangle(530, 490, 100, 1000, {
     isStatic: true,
     render: { fillStyle: "transpert" },
   });
@@ -281,7 +281,7 @@
   Events.on(render, "afterRender", () => {
     if (isGameOver) {
       ctx.fillStyle = "#ffffff55";
-      ctx.rect(0, 0, 500, 880);
+      ctx.rect(0, 0, 490, 880);
       ctx.fill();
 
       writeText("Game Over", "center", 240, 280, 50);
@@ -293,7 +293,7 @@
         ctx.strokeStyle = "#f55";
         ctx.beginPath();
         ctx.moveTo(0, 100);
-        ctx.lineTo(500, 100);
+        ctx.lineTo(490, 100);
         ctx.stroke();
       }
     }
@@ -306,7 +306,7 @@
             ctx.fillStyle = "rgba(255,255,255, 0.7)";  // 투명한 원 색상 설정
             ctx.fill();
 
-            animation.holeSize += animation.maxHoleSize / 10;
+            animation.holeSize += animation.maxHoleSize / 5;
 
             if (animation.holeSize >= animation.maxHoleSize) {
                 World.remove(engine.world, animation.bodies[0]);
@@ -337,10 +337,10 @@
 
   function resize() {
     canvas.height = 880;
-    canvas.width = 500;
+    canvas.width = 490;
 
     if (isMobile()) {
-      parent.style.zoom = window.innerWidth / 500;
+      parent.style.zoom = window.innerWidth / 480;
       parent.style.top = "0px";
 
       floor.style.height = `${
