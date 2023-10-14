@@ -1,3 +1,5 @@
+let score = 0;
+
 (() => {
   const Engine = Matter.Engine,
     Render = Matter.Render,
@@ -61,7 +63,7 @@
   
     // 결과 표시
     percentileText = `전 세계 ${percentile.toFixed(2)}%의 유저를 이겼습니다.`;
-  }  
+  }
 
   const times = [];
   let fps = 100;
@@ -72,7 +74,6 @@
   let newSize = 1;
 
   let isGameOver = false;
-  let score = 0;
 
   let isLineEnable = false;
 
@@ -307,9 +308,9 @@
       ctx.rect(0, 0, 480, 880);
       ctx.fill();
 
-      writeText("Game Over", "center", 240, 280, 50);
-      writeText("Score: " + score, "center", 240, 320, 30);
-      writeText(percentileText, "center", 240, 380, 20);  // 백분위 정보를 그립니다.
+      writeTextEnd("Game Over", "center", 240, 280, 50);
+      writeTextEnd("Score: " + score, "center", 240, 320, 30);
+      writeTextEnd(percentileText, "center", 240, 380, 20);  // 백분위 정보를 그립니다.
     } else {
       writeText(score, "start", 25, 60, 40);
 
@@ -353,6 +354,18 @@
     ctx.lineWidth = size / 8;
 
     ctx.strokeStyle = "#77d2ff";
+    ctx.strokeText(text, x, y);
+
+    ctx.fillStyle = "#fff";
+    ctx.fillText(text, x, y);
+  }
+
+  function writeTextEnd(text, textAlign, x, y, size) {
+    ctx.font = `${size}px NanumSquare`;
+    ctx.textAlign = textAlign;
+    ctx.lineWidth = size / 8;
+
+    ctx.strokeStyle = "#0e0f37";
     ctx.strokeText(text, x, y);
 
     ctx.fillStyle = "#fff";
@@ -482,3 +495,15 @@
     }
   }
 })();
+
+function shareScore() {
+  // score는 전역 변수로 저장되어 있어야 합니다.
+  const shareText = `버블 아카이브 : ${score}pt 달성! https://yuuka0314.github.io/bubblearchive/`;
+
+  // 클립보드에 텍스트 복사
+  navigator.clipboard.writeText(shareText).then(function() {
+    alert("클립보드에 공유 텍스트가 복사되었습니다.");
+  }).catch(function(err) {
+    console.error("텍스트 복사 실패:", err);
+  });
+}

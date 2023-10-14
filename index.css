@@ -48,6 +48,7 @@ html, body {
   height: 700px;
   position: absolute;
   display: flex;
+  flex-direction: column;  /* 아이템들을 수직 방향으로 정렬합니다 */
   align-items: center;
   justify-content: center;
   transform: translateY(80px);
@@ -59,12 +60,22 @@ html, body {
   width: fit-content;
   height: 35px;
   font-size: 20px;
+  margin-top: 60px;  /* "Play Again" 버튼 아래의 여백을 추가합니다 */
+}
+
+#shareScoreButton {
+  padding-left: 15px;
+  padding-right: 15px;
+  width: fit-content;
+  height: 25px;
+  font-size: 15px;
+  margin-top: 40px;  /* "Play Again" 버튼 아래의 여백을 추가합니다 */
 }
 
 button {
   border-radius: 10px;
   color: #fafafa;
-  background: #39af3d;
+  background: #1f58ad;
   outline: none;
   cursor: pointer;
   border: none;
