@@ -415,26 +415,44 @@
   function newBall(x, y, size) {
     if (size === 1) size = 2;  // Adjust the first size to the second size
     
-    let polyBody;
-
-    const radius = size*11; // Adjust this value for the desired size of the nonagon
-      polyBody = Bodies.polygon(x, y, 9, radius, {
-          render: {
-              sprite: {
-                  texture: `assets/img/${size-1}.png`,
-                  xScale: size / 12.75 * 1.2,  // Scale by 1.8
-                  yScale: size / 12.75 * 1.2,  // Scale by 1.8
-              },
-          }
-    });
-
-    // Add attributes to the body
-    polyBody.size = size;
-    polyBody.createdAt = Date.now();
-    polyBody.restitution = 0.2;
-    polyBody.friction = 0.6;
-    polyBody.merged = false;
-
-    return polyBody;
+    if((size-1)==3) {
+      let polyBody;
+  
+      const radius = size*11; // Adjust this value for the desired size of the nonagon
+        polyBody = Bodies.polygon(x, y, 9, radius, {
+            render: {
+                sprite: {
+                    texture: `assets/img/${size-1}.png`,
+                    xScale: size / 12.75 * 1.2,  // Scale by 1.8
+                    yScale: size / 12.75 * 1.2,  // Scale by 1.8
+                },
+            }
+      });
+  
+      // Add attributes to the body
+      polyBody.size = size;
+      polyBody.createdAt = Date.now();
+      polyBody.restitution = 0.2;
+      polyBody.friction = 0.6;
+      polyBody.merged = false;
+  
+      return polyBody;
+    }else{
+      c = Bodies.circle(x, y, size * 10 * 1.5, {  // 1.8배로 늘림
+        render: {
+          sprite: {
+            texture: `assets/img/${size-1}.png`,
+            xScale: size / 12.75 * 1.5,  // 1.8배로 늘림
+            yScale: size / 12.75 * 1.5,  // 1.8배로 늘림
+          },
+        },
+      });
+      c.size = size;
+      c.createdAt = Date.now();
+      c.restitution = 0.2;
+      c.friction = 0.6;
+      c.merged = false;
+      return c;
+    }
   }
 })();
