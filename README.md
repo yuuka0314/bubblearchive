@@ -1,5 +1,5 @@
 # 블카수박
-[Game Link](https://yuuka0314.github.io/bluesuika)
+[Game Link](https://yuuka0314.github.io/)
 
 [References]  
 [Reference 1](https://github.com/choshinyoung/watermelon)<br/>
