@@ -423,8 +423,8 @@
             render: {
                 sprite: {
                     texture: `assets/img/${size-1}.png`,
-                    xScale: size / 12.75 * 1.2,  // Scale by 1.8
-                    yScale: size / 12.75 * 1.2,  // Scale by 1.8
+                    xScale: size / 12.75 * 1.2,  // Scale by 1.2
+                    yScale: size / 12.75 * 1.2,  // Scale by 1.2
                 },
             }
       });
@@ -438,12 +438,12 @@
   
       return polyBody;
     }else{
-      c = Bodies.circle(x, y, size * 10 * 1.2, {  // 1.8배로 늘림
+      c = Bodies.circle(x, y, size * 10 * 1.2, {  // 1.2배로 늘림
         render: {
           sprite: {
             texture: `assets/img/${size-1}.png`,
-            xScale: size / 12.75 * 1.2,  // 1.8배로 늘림
-            yScale: size / 12.75 * 1.2,  // 1.8배로 늘림
+            xScale: size / 12.75 * 1.2,  // 1.2배로 늘림
+            yScale: size / 12.75 * 1.2,  // 1.2배로 늘림
           },
         },
       });
