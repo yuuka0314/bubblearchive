@@ -20,7 +20,7 @@
     canvas: canvas,
     engine: engine,
     options: {
-      width: 490,
+      width: 480,
       height: 880,
       wireframes: false,
     },
@@ -74,11 +74,11 @@
     isStatic: true,
     render: { fillStyle: "transpert" },
   });
-  const wallLeft = Bodies.rectangle(-50, 490, 100, 1000, {
+  const wallLeft = Bodies.rectangle(-50, 480, 100, 1000, {
     isStatic: true,
     render: { fillStyle: "transpert" },
   });
-  const wallRight = Bodies.rectangle(530, 490, 100, 1000, {
+  const wallRight = Bodies.rectangle(530, 480, 100, 1000, {
     isStatic: true,
     render: { fillStyle: "transpert" },
   });
@@ -281,7 +281,7 @@
   Events.on(render, "afterRender", () => {
     if (isGameOver) {
       ctx.fillStyle = "#ffffff55";
-      ctx.rect(0, 0, 490, 880);
+      ctx.rect(0, 0, 480, 880);
       ctx.fill();
 
       writeText("Game Over", "center", 240, 280, 50);
@@ -293,7 +293,7 @@
         ctx.strokeStyle = "#f55";
         ctx.beginPath();
         ctx.moveTo(0, 100);
-        ctx.lineTo(490, 100);
+        ctx.lineTo(480, 100);
         ctx.stroke();
       }
     }
@@ -337,7 +337,7 @@
 
   function resize() {
     canvas.height = 880;
-    canvas.width = 490;
+    canvas.width = 480;
 
     if (isMobile()) {
       parent.style.zoom = window.innerWidth / 480;
