@@ -1,4 +1,5 @@
 let score = 0;
+let percentile = 0;
 
 (() => {
   const Engine = Matter.Engine,
@@ -59,7 +60,7 @@ let score = 0;
       }
     });
   
-    let percentile = ((totalUsers - higherScores) / totalUsers) * 100;
+    percentile = ((totalUsers - higherScores) / totalUsers) * 100;
   
     // 결과 표시
     percentileText = `전 세계 ${percentile.toFixed(2)}%의 유저를 이겼습니다.`;
@@ -498,7 +499,7 @@ let score = 0;
 
 function shareScore() {
   // score는 전역 변수로 저장되어 있어야 합니다.
-  const shareText = `버블 아카이브 : ${score}pt 달성! https://yuuka0314.github.io/bubblearchive/`;
+  const shareText = `버블 아카이브 : ${score}pt, 전 세계 ${percentile.toFixed(2)}% 달성!} https://yuuka0314.github.io/bubblearchive/`;
 
   // 클립보드에 텍스트 복사
   navigator.clipboard.writeText(shareText).then(function() {
