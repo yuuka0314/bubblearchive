@@ -497,14 +497,25 @@ let percentile = 0;
   }
 })();
 
+function copyTextToClipboard(text) {
+  // 임시로 텍스트를 textarea 요소에 넣어 복사하기 위한 작업을 수행합니다.
+  var textArea = document.createElement("textarea");
+  textArea.value = text;
+  document.body.appendChild(textArea);
+
+  // 텍스트 선택 및 복사 작업을 수행합니다.
+  textArea.select();
+  document.execCommand('copy');
+
+  // 임시 textarea 요소를 삭제합니다.
+  document.body.removeChild(textArea);
+}
+
 function shareScore() {
   // score는 전역 변수로 저장되어 있어야 합니다.
   const shareText = `버블 아카이브 : ${score}pt\n전 세계 ${percentile.toFixed(2)}% 달성!\nhttps://yuuka0314.github.io/bubblearchive/`;
 
-  // 클립보드에 텍스트 복사
-  navigator.clipboard.writeText(shareText).then(function() {
-    alert("클립보드에 공유 텍스트가 복사되었습니다.");
-  }).catch(function(err) {
-    console.error("텍스트 복사 실패:", err);
-  });
+  // 텍스트를 클립보드에 복사합니다.
+  copyTextToClipboard(shareText);
+  alert("클립보드에 공유 텍스트가 복사되었습니다.");
 }
